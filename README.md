@@ -1,1 +1,1 @@
-# project-vendas-pedidos
+# projeto vendas-pedidos

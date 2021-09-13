@@ -1,8 +1,8 @@
 package com.vendaspedidos.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Categoria implements Serializable{
 	private String nome;
 	
 	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
+	private Set<Produto> produtos = new HashSet<>();
  	
 	public Categoria() {
 	}
@@ -48,7 +48,7 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
-	public List<Produto> getProdutos() {
+	public Set<Produto> getProdutos() {
 		return produtos;
 	}
 

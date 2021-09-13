@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vendaspedidos.dto.CategoriaDTO;
 import com.vendaspedidos.entities.Categoria;
 import com.vendaspedidos.repositories.CategoriaRepository;
+import com.vendaspedidos.services.exception.ResourceNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -18,10 +19,10 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repository;
 	
-	//@Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public CategoriaDTO findById(Long id) {
 		Optional<Categoria> cat = repository.findById(id);
-		Categoria entity = cat.orElseThrow(() -> new RuntimeException());
+		Categoria entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
 		return new CategoriaDTO(entity);
 	}
 	

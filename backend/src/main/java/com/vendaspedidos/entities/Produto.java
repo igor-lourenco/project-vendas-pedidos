@@ -1,8 +1,8 @@
 package com.vendaspedidos.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,10 +26,10 @@ public class Produto implements Serializable {
 	
 	
 	@ManyToMany
-	@JoinTable(name = "produto_categoria",
+	@JoinTable(name = "tb_produto_categoria",
 	joinColumns = @JoinColumn(name = "produto_id"),
 	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-	private List<Categoria> categorias = new ArrayList<>();
+	Set<Categoria> categorias = new HashSet<>();
 	
 	public Produto() {
 	}
@@ -56,11 +56,11 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Categoria> getCategorias() {
+	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(List<Categoria> categorias) {
+	public void setCategorias(Set<Categoria> categorias) {
 		this.categorias = categorias;
 	}
 

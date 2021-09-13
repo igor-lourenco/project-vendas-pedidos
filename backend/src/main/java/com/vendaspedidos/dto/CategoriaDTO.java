@@ -22,7 +22,7 @@ public class CategoriaDTO implements Serializable {
 		id = entity.getId();
 		nome = entity.getNome();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

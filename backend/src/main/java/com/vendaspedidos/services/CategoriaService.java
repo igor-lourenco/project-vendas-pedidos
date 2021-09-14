@@ -23,11 +23,12 @@ public class CategoriaService {
 	public CategoriaDTO findById(Long id) {
 		Optional<Categoria> cat = repository.findById(id);
 		Categoria entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
-		return new CategoriaDTO(entity);
+		return new CategoriaDTO(entity, entity.getProdutos());
 	}
 	
+	@Transactional(readOnly = true)
 	public List<CategoriaDTO> findAll(){
 		List<Categoria> entity = repository.findAll();
-		return entity.stream().map(x -> new CategoriaDTO(x)).collect(Collectors.toList());
+		return entity.stream().map(x -> new CategoriaDTO(x, x.getProdutos())).collect(Collectors.toList());
 	}
 }

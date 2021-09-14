@@ -1,38 +1,38 @@
-package com.vendaspedidos.dto;
+package com.vendaspedidos.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.vendaspedidos.entities.Categoria;
-import com.vendaspedidos.entities.Produto;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class CategoriaDTO implements Serializable {
+@Entity
+@Table(name = "tb_cidade")
+public class Cidade  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	
-	private Set<Produto> produtos = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name= "estado_id")
+	private Estado estado;
 	
-	public CategoriaDTO() {
+	public Cidade() {
 	}
-	
-	public CategoriaDTO(Long id, String nome) {
+
+	public Cidade(Long id, String nome, Estado estado) {
 		this.id = id;
 		this.nome = nome;
+		this.estado = estado;
 	}
-	
-	public CategoriaDTO(Categoria entity) {
-		id = entity.getId();
-		nome = entity.getNome();
-	}
-	
-	public CategoriaDTO(Categoria entity, Set<Produto> produtos) {
-		this(entity);
-		produtos.forEach(prod -> this.produtos.add(prod));
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -47,10 +47,14 @@ public class CategoriaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}	
+	}
 
-	public Set<Produto> getProdutos() {
-		return produtos;
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class CategoriaDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaDTO other = (CategoriaDTO) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

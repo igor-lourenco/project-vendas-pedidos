@@ -1,38 +1,37 @@
-package com.vendaspedidos.dto;
+package com.vendaspedidos.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.vendaspedidos.entities.Categoria;
-import com.vendaspedidos.entities.Produto;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-public class CategoriaDTO implements Serializable {
+@Entity
+@Table(name = "tb_estado")
+public class Estado implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	
-	private Set<Produto> produtos = new HashSet<>();
+	@OneToMany(mappedBy = "estado")
+	private List<Cidade> cidades = new ArrayList<>();
 	
-	public CategoriaDTO() {
+	public Estado() {
 	}
-	
-	public CategoriaDTO(Long id, String nome) {
+
+	public Estado(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
-	
-	public CategoriaDTO(Categoria entity) {
-		id = entity.getId();
-		nome = entity.getNome();
-	}
-	
-	public CategoriaDTO(Categoria entity, Set<Produto> produtos) {
-		this(entity);
-		produtos.forEach(prod -> this.produtos.add(prod));
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -47,10 +46,10 @@ public class CategoriaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}	
-
-	public Set<Produto> getProdutos() {
-		return produtos;
+	}
+	
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public class CategoriaDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaDTO other = (CategoriaDTO) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

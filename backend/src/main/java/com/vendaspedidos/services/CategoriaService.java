@@ -31,4 +31,13 @@ public class CategoriaService {
 		List<Categoria> entity = repository.findAll();
 		return entity.stream().map(x -> new CategoriaDTO(x, x.getProdutos())).collect(Collectors.toList());
 	}
+	
+	@Transactional(readOnly = true)
+	public CategoriaDTO insert(CategoriaDTO dto) {
+		Categoria entity = new Categoria();
+		entity.setId(dto.getId());
+		entity.setNome(dto.getNome());
+		entity = repository.save(entity);
+		return new CategoriaDTO(entity);
+	}
 }

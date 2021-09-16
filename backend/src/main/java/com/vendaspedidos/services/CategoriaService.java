@@ -1,14 +1,15 @@
 package com.vendaspedidos.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +29,15 @@ public class CategoriaService {
 	public CategoriaDTO findById(Long id) {
 		Optional<Categoria> cat = repository.findById(id);
 		Categoria entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
-		return new CategoriaDTO(entity, entity.getProdutos());
+		return new CategoriaDTO(entity);
 	}
 	
 	@Transactional(readOnly = true)
-	public List<CategoriaDTO> findAll(){
-		List<Categoria> entity = repository.findAll();
-		return entity.stream().map(x -> new CategoriaDTO(x, x.getProdutos())).collect(Collectors.toList());
+	public Page<CategoriaDTO> findAll(Integer pageable, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(pageable, linesPerPage, Direction.valueOf(direction), orderBy);
+		Page<Categoria> page = repository.findAll(pageRequest);
+		return  page.map(x -> new CategoriaDTO(x));
+		
 	}
 	
 	@Transactional(readOnly = true)

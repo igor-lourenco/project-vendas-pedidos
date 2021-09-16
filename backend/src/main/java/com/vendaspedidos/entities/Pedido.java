@@ -26,12 +26,13 @@ public class Pedido implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	//@JsonFormat(pattern = "dd/MM/yyyy HH:mm") erro na formatação
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant instante;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;

@@ -14,8 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vendaspedidos.dto.ClienteDTO;
+import com.vendaspedidos.dto.ClienteNewDTO;
+import com.vendaspedidos.entities.Cidade;
 import com.vendaspedidos.entities.Cliente;
+import com.vendaspedidos.entities.Endereco;
+import com.vendaspedidos.entities.enums.TipoCliente;
 import com.vendaspedidos.repositories.ClienteRepository;
+import com.vendaspedidos.repositories.EnderecoRepository;
 import com.vendaspedidos.services.exception.DatabaseException;
 import com.vendaspedidos.services.exception.ResourceNotFoundException;
 
@@ -25,11 +30,14 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repository;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	@Transactional(readOnly = true)
 	public ClienteDTO findById(Long id) {
 		Optional<Cliente> cat = repository.findById(id);
 		Cliente entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
-		return new ClienteDTO(entity);
+		return new ClienteDTO(entity, entity.getEnderecos(), entity.getTelefones());
 	}
 	
 	@Transactional(readOnly = true)
@@ -41,12 +49,12 @@ public class ClienteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public ClienteDTO insert(ClienteDTO dto) {
-		Cliente entity = new Cliente();
-		entity.setId(dto.getId());
-		entity.setNome(dto.getNome());
+	public Cliente insert(Cliente entity) {
+		entity.setId(null);
 		entity = repository.save(entity);
-		return new ClienteDTO(entity);
+		enderecoRepository.saveAll(entity.getEnderecos());
+		return entity;
+		
 	}
 
 	@Transactional
@@ -71,5 +79,17 @@ public class ClienteService {
 			throw new DatabaseException("Violação de integridade no banco");
 		}
 	}
-
+	
+	public Cliente fromDTO(ClienteNewDTO dto) {
+		Cliente cliente = new Cliente(null, dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(),
+				TipoCliente.toEnum(dto.getTipoCliente()));
+		Cidade cidade = new Cidade(dto.getCidadeId(), null, null);
+		Endereco endereco = new Endereco(null, dto.getLogradouro(), dto.getNumero(),
+				dto.getComplemento(), dto.getBairro(), dto.getCpfOuCnpj(), cliente, cidade);
+		cliente.getEnderecos().add(endereco);
+		cliente.getTelefones().add(dto.getTelefone1());
+		if(dto.getTelefone2() != null)
+			cliente.getTelefones().add(dto.getTelefone2());
+		return cliente;
+	}
 }

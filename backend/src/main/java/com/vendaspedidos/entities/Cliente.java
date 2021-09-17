@@ -2,9 +2,7 @@ package com.vendaspedidos.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -37,7 +35,7 @@ public class Cliente implements Serializable{
 	
 	@ElementCollection
 	@CollectionTable(name = "tb_telefone")
-	private Set<String> telefones = new HashSet<>();
+	private List<String> telefones = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
@@ -98,7 +96,7 @@ public class Cliente implements Serializable{
 		return enderecos;
 	}
 
-	public Set<String> getTelefones() {
+	public List<String> getTelefones() {
 		return telefones;
 	}
 	

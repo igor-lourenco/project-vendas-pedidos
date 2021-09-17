@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vendaspedidos.dto.ClienteDTO;
+import com.vendaspedidos.dto.ClienteNewDTO;
+import com.vendaspedidos.entities.Cliente;
 import com.vendaspedidos.services.ClienteService;
 
 @RestController
@@ -46,10 +48,11 @@ public class ClienteResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> insert(@Valid @RequestBody ClienteDTO dto){
-		dto = service.insert(dto);
+	public ResponseEntity<ClienteNewDTO> insert(@Valid @RequestBody ClienteNewDTO dto){
+		Cliente entity = service.fromDTO(dto);
+		entity = service.insert(entity);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-				buildAndExpand(dto.getId()).toUri();  //mostra no cabeçalho da resposta o endereço da entidade criada
+				buildAndExpand(entity.getId()).toUri();  //mostra no cabeçalho da resposta o endereço da entidade criada
 		return ResponseEntity.created(uri).body(dto); //mostra no corpo da página a entidade criada
 	}
 	

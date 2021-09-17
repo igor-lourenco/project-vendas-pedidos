@@ -2,6 +2,8 @@ package com.vendaspedidos.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,7 @@ public class CategoriaResource {
 			@RequestParam(value="linesPerPage", defaultValue="12")Integer linesPerPage,
 			@RequestParam(value="orderBy", defaultValue="nome")String orderBy,
 			@RequestParam(value="direction", defaultValue="ASC")String direction){
+		
 		Page<CategoriaDTO> page = service.findAll(pageable, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(page);
 	}
@@ -43,7 +46,7 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CategoriaDTO> insert(@RequestBody CategoriaDTO dto){
+	public ResponseEntity<CategoriaDTO> insert(@Valid @RequestBody CategoriaDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
 				buildAndExpand(dto.getId()).toUri();  //mostra no cabeçalho da resposta o endereço da entidade criada
@@ -60,6 +63,5 @@ public class CategoriaResource {
 	public ResponseEntity<CategoriaDTO> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
-		
 	}
 }

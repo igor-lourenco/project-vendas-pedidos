@@ -40,7 +40,7 @@ public class CategoriaService {
 		
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	public CategoriaDTO insert(CategoriaDTO dto) {
 		Categoria entity = new Categoria();
 		entity.setId(dto.getId());

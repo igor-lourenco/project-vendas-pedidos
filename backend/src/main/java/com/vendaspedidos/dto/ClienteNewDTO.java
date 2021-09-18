@@ -23,6 +23,7 @@ public class ClienteNewDTO implements Serializable{
 	
 	public ClienteNewDTO() {
 	}
+	
 
 	public String getNome() {
 		return nome;

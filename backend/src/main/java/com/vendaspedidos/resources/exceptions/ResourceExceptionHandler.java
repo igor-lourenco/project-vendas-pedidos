@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.JDBCException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -37,6 +38,18 @@ public class ResourceExceptionHandler {
 		err.setStatus(status.value());
 		err.setError("Exceção no banco");
 		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(JDBCException.class)
+	public ResponseEntity<StandardError> jdbcException(JDBCException e, HttpServletRequest request){
+		HttpStatus status = HttpStatus.BAD_REQUEST; //400
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("Exceção no banco");
+		err.setMessage("E-mail já existe!");
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}

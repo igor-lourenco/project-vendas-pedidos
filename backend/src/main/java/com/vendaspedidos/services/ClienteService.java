@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,7 +38,7 @@ public class ClienteService {
 	public ClienteDTO findById(Long id) {
 		Optional<Cliente> cat = repository.findById(id);
 		Cliente entity = cat.orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado -> " + id));
-		return new ClienteDTO(entity, entity.getEnderecos(), entity.getTelefones());
+		return new ClienteDTO(entity);
 	}
 
 	@Transactional(readOnly = true)
@@ -56,7 +57,7 @@ public class ClienteService {
 
 	}
 
-	@Transactional
+
 	public ClienteDTO update(Long id, ClienteDTO dto) {
 		try {
 			Cliente entity = repository.getOne(id);
@@ -66,6 +67,8 @@ public class ClienteService {
 			return new ClienteDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Cliente não encontrado -> "+ id);
+		}catch(JDBCException e) {
+			throw new ResourceNotFoundException("E-mail já existente!");
 		}
 	}
 

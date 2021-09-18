@@ -2,20 +2,41 @@ package com.vendaspedidos.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.vendaspedidos.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@NotBlank(message = "Campo requerido")
+	@Size(min=3, max=50, message="O tamanho deve ser entre 3 e 50 caracteres")
 	private String nome;
+	
+	@NotBlank(message = "Campo requerido")
+	@Email(message="E-mail inválido")
 	private String email;
+	
+	@NotBlank(message = "Campo requerido")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	
+	@NotBlank(message = "Campo requerido")
 	private String logradouro;
+	
+	@NotBlank(message = "Campo requerido")
 	private String numero;
+	
 	private String complemento;
 	private String bairro;
+	
+	@NotBlank(message = "Campo requerido")
 	private String cep;
 
+	@NotBlank(message = "Campo requerido")
 	private String telefone1;
 	private String telefone2;
 	

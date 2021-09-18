@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 import com.vendaspedidos.services.validation.ClienteInsert;
 
-@ClienteInsert
+@ClienteInsert //annotation customizada
 public class ClienteNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

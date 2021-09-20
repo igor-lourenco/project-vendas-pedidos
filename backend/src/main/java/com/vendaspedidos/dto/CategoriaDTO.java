@@ -13,7 +13,7 @@ import com.vendaspedidos.entities.Produto;
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Integer id;
 	
 	@Size(min = 5, max = 60, message = "Deve ter entre 5 e 60 caracteres")
 	@NotBlank(message = "Campo requerido")
@@ -24,7 +24,7 @@ public class CategoriaDTO implements Serializable {
 	public CategoriaDTO() {
 	}
 	
-	public CategoriaDTO(Long id, String nome) {
+	public CategoriaDTO(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -39,11 +39,11 @@ public class CategoriaDTO implements Serializable {
 		produtos.forEach(prod -> this.produtos.add(prod));
 	}
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -26,7 +26,7 @@ public class CategoriaService {
 	private CategoriaRepository repository;
 	
 	@Transactional(readOnly = true)
-	public CategoriaDTO findById(Long id) {
+	public CategoriaDTO findById(Integer id) {
 		Optional<Categoria> cat = repository.findById(id);
 		Categoria entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
 		return new CategoriaDTO(entity);
@@ -50,7 +50,7 @@ public class CategoriaService {
 	}
 
 	@Transactional
-	public CategoriaDTO update(Long id, CategoriaDTO dto) {
+	public CategoriaDTO update(Integer id, CategoriaDTO dto) {
 		try {
 			Categoria entity = repository.getOne(id);
 			entity.setNome(dto.getNome());
@@ -61,7 +61,7 @@ public class CategoriaService {
 		}
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		try {
 			repository.deleteById(id);			
 		}catch(EmptyResultDataAccessException e) {

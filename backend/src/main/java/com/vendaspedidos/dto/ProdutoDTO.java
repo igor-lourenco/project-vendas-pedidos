@@ -1,11 +1,7 @@
 package com.vendaspedidos.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
-import com.vendaspedidos.entities.Categoria;
 import com.vendaspedidos.entities.Produto;
 
 public class ProdutoDTO implements Serializable {
@@ -14,7 +10,7 @@ public class ProdutoDTO implements Serializable {
 	private Long id;
 	private String nome;
 	private Double preco;
-	private List<Categoria> categorias = new ArrayList<>();
+	//private List<Categoria> categorias = new ArrayList<>();
 
 	public ProdutoDTO() {
 	}
@@ -32,10 +28,10 @@ public class ProdutoDTO implements Serializable {
 		preco = entity.getPreco();
 	}
 	
-	public ProdutoDTO(Produto entity, Set<Categoria> categorias) {
+	/*public ProdutoDTO(Produto entity, Set<Categoria> categorias) {
 		this(entity);
 		categorias.forEach(cat -> this.categorias.add(cat));
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -60,8 +56,8 @@ public class ProdutoDTO implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-
+/*
 	public List<Categoria> getCategorias() {
 		return categorias;
-	}
+	}*/
 }

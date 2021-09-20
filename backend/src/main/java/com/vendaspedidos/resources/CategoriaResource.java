@@ -40,7 +40,7 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<CategoriaDTO> findById(@PathVariable Long id) {
+	public ResponseEntity<CategoriaDTO> findById(@PathVariable Integer id) {
 		CategoriaDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
@@ -54,13 +54,13 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO dto){
+	public ResponseEntity<CategoriaDTO> update(@PathVariable Integer id, @RequestBody CategoriaDTO dto){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<CategoriaDTO> delete(@PathVariable Long id){
+	public ResponseEntity<CategoriaDTO> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

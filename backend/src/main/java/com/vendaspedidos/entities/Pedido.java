@@ -44,6 +44,7 @@ public class Pedido implements Serializable{
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
 	
+
 	public Pedido() {
 	}
 
@@ -53,7 +54,7 @@ public class Pedido implements Serializable{
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

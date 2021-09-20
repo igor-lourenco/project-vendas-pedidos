@@ -44,6 +44,14 @@ public class PedidoDTO implements Serializable{
 		this(entity);
 		itens.forEach(item -> this.itens.add(item));
 	}
+	
+	public Double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		return soma;
+	}
 
 	public Long getId() {
 		return id;

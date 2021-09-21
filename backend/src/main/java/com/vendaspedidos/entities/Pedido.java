@@ -1,7 +1,7 @@
 package com.vendaspedidos.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,18 +17,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "tb_pedido")
 public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@JsonFormat(pattern = "dd/MM/yyyy HH:mm") erro na formatação
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm") //erro na formatação
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant instante;
+	private LocalDateTime instante;
+
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
@@ -48,7 +51,7 @@ public class Pedido implements Serializable{
 	public Pedido() {
 	}
 
-	public Pedido(Long id, Instant instante, Cliente cliente, Endereco enderecoDeEntrega) {
+	public Pedido(Long id, LocalDateTime instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		this.id = id;
 		this.instante = instante;
 		this.cliente = cliente;
@@ -63,11 +66,11 @@ public class Pedido implements Serializable{
 		this.id = id;
 	}
 
-	public Instant getInstante() {
+	public LocalDateTime getInstante() {
 		return instante;
 	}
 
-	public void setInstante(Instant instante) {
+	public void setInstante(LocalDateTime instante) {
 		this.instante = instante;
 	}
 

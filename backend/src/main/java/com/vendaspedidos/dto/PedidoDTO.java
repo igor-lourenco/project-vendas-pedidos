@@ -1,10 +1,11 @@
 package com.vendaspedidos.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vendaspedidos.entities.Cliente;
 import com.vendaspedidos.entities.Endereco;
 import com.vendaspedidos.entities.ItemPedido;
@@ -15,7 +16,9 @@ public class PedidoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Instant instante;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime instante;
 	private Pagamento pagamento;
 	private Cliente cliente;
 	private Endereco enderecoDeEntrega;
@@ -24,7 +27,7 @@ public class PedidoDTO implements Serializable{
 	public PedidoDTO() {
 	}
 
-	public PedidoDTO(Long id, Instant instante, Pagamento pagamento, Cliente cliente, Endereco enderecoDeEntrega) {
+	public PedidoDTO(Long id, LocalDateTime instante, Pagamento pagamento, Cliente cliente, Endereco enderecoDeEntrega) {
 		this.id = id;
 		this.instante = instante;
 		this.pagamento = pagamento;
@@ -50,6 +53,7 @@ public class PedidoDTO implements Serializable{
 		for (ItemPedido ip : itens) {
 			soma = soma + ip.getSubTotal();
 		}
+		
 		return soma;
 	}
 
@@ -61,11 +65,11 @@ public class PedidoDTO implements Serializable{
 		this.id = id;
 	}
 
-	public Instant getInstante() {
+	public LocalDateTime getInstante() {
 		return instante;
 	}
 
-	public void setInstante(Instant instante) {
+	public void setInstante(LocalDateTime instante) {
 		this.instante = instante;
 	}
 

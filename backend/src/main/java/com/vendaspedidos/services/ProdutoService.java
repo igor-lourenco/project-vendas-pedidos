@@ -1,13 +1,13 @@
 package com.vendaspedidos.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +28,11 @@ public class ProdutoService {
 	private CategoriaRepository categoriaRepository;
 
 	
-	public Page<ProdutoDTO> search1(String nome, List<Integer> ids,Integer pageable, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pageRequest = PageRequest.of(pageable, linesPerPage, Direction.valueOf(direction), orderBy);
-		List<Categoria> categorias = categoriaRepository.findAllById(ids);
-		Page<Produto> entity = repository.search(nome, categorias, pageRequest);
-		return entity.map(x -> new ProdutoDTO(x));
+	public Page<ProdutoDTO> search1(Integer categoryId,String name, Pageable pageable){
+		List<Categoria> cats = (categoryId == 0) ? null : Arrays.asList(categoriaRepository.getOne(categoryId));
+		Page<Produto> list = repository.find(cats,name, pageable); // Busca todos os objetos da lista Product
+		repository.findProductsWithCategories(list.getContent());
+		return list.map(x -> new ProdutoDTO(x, x.getCategorias())); // Converte os objetos da lista Product para lista ProductDto
 	}
 		
 	@Transactional(readOnly = true)
@@ -47,10 +47,4 @@ public class ProdutoService {
 		List<Produto> entity = repository.findAll();
 		return entity.stream().map(x -> new ProdutoDTO(x)).collect(Collectors.toList());
 	}
-	/*
-	public Page<Produto> search2(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		List<Categoria> categorias = categoriaRepository.findAllById(ids);
-		return repository.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);	
-	}*/
 }

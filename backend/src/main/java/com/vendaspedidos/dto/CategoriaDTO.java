@@ -1,16 +1,15 @@
 package com.vendaspedidos.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.vendaspedidos.entities.Categoria;
-import com.vendaspedidos.entities.Produto;
+import org.springframework.hateoas.RepresentationModel;
 
-public class CategoriaDTO implements Serializable {
+import com.vendaspedidos.entities.Categoria;
+
+public class CategoriaDTO extends RepresentationModel<CategoriaDTO> implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
@@ -19,7 +18,7 @@ public class CategoriaDTO implements Serializable {
 	@NotBlank(message = "Campo requerido")
 	private String nome;
 	
-	private Set<Produto> produtos = new HashSet<>();
+	//private Set<Produto> produtos = new HashSet<>();
 	
 	public CategoriaDTO() {
 	}
@@ -33,11 +32,11 @@ public class CategoriaDTO implements Serializable {
 		id = entity.getId();
 		nome = entity.getNome();
 	}
-	
+	/*
 	public CategoriaDTO(Categoria entity, Set<Produto> produtos) {
 		this(entity);
 		produtos.forEach(prod -> this.produtos.add(prod));
-	}
+	}*/
 	
 	public Integer getId() {
 		return id;
@@ -54,10 +53,10 @@ public class CategoriaDTO implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}	
-
+	/*
 	public Set<Produto> getProdutos() {
 		return produtos;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

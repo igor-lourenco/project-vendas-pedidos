@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,11 +32,9 @@ public class CategoriaService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<CategoriaDTO> findAll(Integer pageable, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pageRequest = PageRequest.of(pageable, linesPerPage, Direction.valueOf(direction), orderBy);
-		Page<Categoria> page = repository.findAll(pageRequest);
+	public Page<CategoriaDTO> findAll(Pageable pageable){
+		Page<Categoria> page = repository.findAll(pageable);
 		return  page.map(x -> new CategoriaDTO(x));
-		
 	}
 	
 	@Transactional

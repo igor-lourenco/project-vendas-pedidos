@@ -1,10 +1,38 @@
 package com.vendaspedidos.services;
 
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.vendaspedidos.entities.Categoria;
+import com.vendaspedidos.entities.Cidade;
+import com.vendaspedidos.entities.Cliente;
+import com.vendaspedidos.entities.Endereco;
+import com.vendaspedidos.entities.Estado;
+import com.vendaspedidos.entities.ItemPedido;
+import com.vendaspedidos.entities.Pagamento;
+import com.vendaspedidos.entities.PagamentoComBoleto;
+import com.vendaspedidos.entities.PagamentoComCartao;
+import com.vendaspedidos.entities.Pedido;
+import com.vendaspedidos.entities.Produto;
+import com.vendaspedidos.entities.enums.EstadoPagamento;
+import com.vendaspedidos.entities.enums.TipoCliente;
+import com.vendaspedidos.repositories.CategoriaRepository;
+import com.vendaspedidos.repositories.CidadeRepository;
+import com.vendaspedidos.repositories.ClienteRepository;
+import com.vendaspedidos.repositories.EnderecoRepository;
+import com.vendaspedidos.repositories.EstadoRepository;
+import com.vendaspedidos.repositories.ItemPedidoRepository;
+import com.vendaspedidos.repositories.PagamentoRepository;
+import com.vendaspedidos.repositories.PedidoRepository;
+import com.vendaspedidos.repositories.ProdutoRepository;
 
 @Service
 public class DbService {
-/*
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	@Autowired
@@ -96,13 +124,13 @@ public class DbService {
 
 		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		Pedido ped1 = new Pedido(null, LocalDateTime.parse("30/09/2017 10:32"), cli1, e1);
-		Pedido ped2 = new Pedido(null, LocalDateTime.parse("10/10/2017 19:35"), cli1, e2);		
+		Pedido ped1 = new Pedido(null, LocalDateTime.now(), cli1, e1);
+		Pedido ped2 = new Pedido(null, LocalDateTime.now(),cli1, e2);		
 
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
 
-		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, LocalDateTime.parse("20/10/2017 00:00"), null);
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, LocalDateTime.now(), null);
 		ped2.setPagamento(pagto2);
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
@@ -123,5 +151,5 @@ public class DbService {
 
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));		
 	}
-	*/
+	
 }

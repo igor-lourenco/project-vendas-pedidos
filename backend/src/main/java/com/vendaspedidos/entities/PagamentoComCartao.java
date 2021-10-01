@@ -15,7 +15,6 @@ public class PagamentoComCartao extends Pagamento {
 
 	private Integer numeroDeParcelas;	
 
-	
 	public PagamentoComCartao() {
 	}
 	
@@ -38,5 +37,4 @@ public class PagamentoComCartao extends Pagamento {
 	public void setNumeroDeParcelas(Integer numeroDeParcelas) {
 		this.numeroDeParcelas = numeroDeParcelas;
 	}
-	
 }

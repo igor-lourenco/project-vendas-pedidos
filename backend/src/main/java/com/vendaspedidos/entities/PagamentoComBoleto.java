@@ -2,7 +2,6 @@ package com.vendaspedidos.entities;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -16,10 +15,7 @@ import com.vendaspedidos.entities.enums.EstadoPagamento;
 public class PagamentoComBoleto extends Pagamento{
 	private static final long serialVersionUID = 1L;
 
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private LocalDateTime dataVencimento;
-	
-	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private LocalDateTime dataPagamento;
 	
 	public PagamentoComBoleto() {

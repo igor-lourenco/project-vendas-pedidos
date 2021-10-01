@@ -18,8 +18,6 @@ public class CategoriaDTO extends RepresentationModel<CategoriaDTO> implements S
 	@NotBlank(message = "Campo requerido")
 	private String nome;
 	
-	//private Set<Produto> produtos = new HashSet<>();
-	
 	public CategoriaDTO() {
 	}
 	
@@ -32,11 +30,6 @@ public class CategoriaDTO extends RepresentationModel<CategoriaDTO> implements S
 		id = entity.getId();
 		nome = entity.getNome();
 	}
-	/*
-	public CategoriaDTO(Categoria entity, Set<Produto> produtos) {
-		this(entity);
-		produtos.forEach(prod -> this.produtos.add(prod));
-	}*/
 	
 	public Integer getId() {
 		return id;
@@ -53,11 +46,7 @@ public class CategoriaDTO extends RepresentationModel<CategoriaDTO> implements S
 	public void setNome(String nome) {
 		this.nome = nome;
 	}	
-	/*
-	public Set<Produto> getProdutos() {
-		return produtos;
-	}*/
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

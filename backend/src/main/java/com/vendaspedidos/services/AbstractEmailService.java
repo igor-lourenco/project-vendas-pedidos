@@ -1,32 +1,39 @@
 package com.vendaspedidos.services;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.vendaspedidos.dto.EmailDTO;
 import com.vendaspedidos.entities.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
 
 	@Value("${default.sender}")
 	private String sender;
-	
+
 	@Override
 	public void sendOrderConfirmationEmail(Pedido obj) {
-		SimpleMailMessage sm = prepareSimpleMailMessageFromPedido(obj);
-		sendEmail(sm);
+		Mail mail = prepareSimpleMailMessageFromPedido(obj);
+
+		sendEmail(mail);
 	}
 
-	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
-		SimpleMailMessage sm = new SimpleMailMessage();
-		sm.setTo(obj.getCliente().getEmail());
-		sm.setFrom(sender);
-		sm.setSubject("Pedido confirmado! Código: " + obj.getId());
-		sm.setSentDate(new Date(System.currentTimeMillis()));
-		sm.setText(obj.toString());
-		return sm;
+	protected Mail prepareSimpleMailMessageFromPedido(Pedido obj) {
+		EmailDTO dto = new EmailDTO();
+		dto.setFromEmail("igor.bretricolor@gmail.com");
+		dto.setFromName("Igor | Lourenço");
+		Email from = new Email(dto.getFromEmail(), dto.getFromName());
+
+		dto.setTo(obj.getCliente().getEmail());
+		Email to = new Email(dto.getTo());
+
+		dto.setSubject("Pedido confirmado! Código: " + obj.getId());
+		dto.setBody(obj.toString());
+		dto.setContentType("text/plain");
+		dto.setReplyTo(sender);
+		Content content = new Content(dto.getContentType(), dto.getSubject() + dto.getBody());
+		return new Mail(from, dto.getSubject(), to, content);
 	}
-	
-	
 }

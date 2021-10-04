@@ -139,7 +139,7 @@ public class Pedido implements Serializable{
 		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		StringBuilder builder = new StringBuilder();
-		builder.append("Pedido número: ");
+		builder.append("\nPedido número: ");
 		builder.append(getId());
 		builder.append(", Instante: ");
 		builder.append(getInstante().format(formatter));

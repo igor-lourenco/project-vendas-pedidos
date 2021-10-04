@@ -42,9 +42,9 @@ public class ClienteResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ClienteDTO> findById(@PathVariable Long id) {
-		ClienteDTO dto = service.findById(id);
-		return ResponseEntity.ok().body(dto);
+	public ResponseEntity<Cliente> findById(@PathVariable Long id) {
+		Cliente obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping

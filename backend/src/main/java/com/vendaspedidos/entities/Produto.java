@@ -16,11 +16,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_produto")
-public class Produto implements Serializable {
+public class Produto extends RepresentationModel<Produto> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

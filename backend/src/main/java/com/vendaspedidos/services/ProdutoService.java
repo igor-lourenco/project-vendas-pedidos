@@ -36,10 +36,9 @@ public class ProdutoService {
 	}
 		
 	@Transactional(readOnly = true)
-	public ProdutoDTO findById(Long id) {
+	public Produto findById(Long id) {
 		Optional<Produto> cat = repository.findById(id);
-		Produto entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
-		return new ProdutoDTO(entity);
+		return cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
 	}
 	
 	@Transactional(readOnly = true)

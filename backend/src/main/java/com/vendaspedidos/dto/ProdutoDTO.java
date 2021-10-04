@@ -10,7 +10,7 @@ import org.springframework.hateoas.RepresentationModel;
 import com.vendaspedidos.entities.Categoria;
 import com.vendaspedidos.entities.Produto;
 
-public class ProdutoDTO extends RepresentationModel<CategoriaDTO> implements Serializable{
+public class ProdutoDTO extends RepresentationModel<ProdutoDTO> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Long id;

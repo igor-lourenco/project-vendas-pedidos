@@ -35,10 +35,10 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 
 	@Transactional(readOnly = true)
-	public ClienteDTO findById(Long id) {
-		Optional<Cliente> cat = repository.findById(id);
-		Cliente entity = cat.orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado -> " + id));
-		return new ClienteDTO(entity);
+	public Cliente findById(Long id) {
+		Optional<Cliente> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	@Transactional(readOnly = true)

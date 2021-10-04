@@ -39,7 +39,7 @@ public class PedidoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
+	public ResponseEntity<Pedido> insert(@Valid @RequestBody Pedido obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

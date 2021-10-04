@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vendaspedidos.dto.CategoriaDTO;
 import com.vendaspedidos.dto.ProdutoDTO;
+import com.vendaspedidos.entities.Produto;
 import com.vendaspedidos.services.ProdutoService;
 
 @RestController
@@ -48,10 +49,10 @@ public class ProdutoResource {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ProdutoDTO> findById(@PathVariable Long id) {
-		ProdutoDTO dto = service.findById(id);
-		dto.add(linkTo(methodOn(ProdutoResource.class).findAll(null, null, null)).withRel("Lista de Produtos"));
-		return ResponseEntity.ok().body(dto);
+	public ResponseEntity<Produto> findById(@PathVariable Long id) {
+		Produto obj = service.findById(id);
+		obj.add(linkTo(methodOn(ProdutoResource.class).findAll(null, null, null)).withRel("Lista de Produtos"));
+		return ResponseEntity.ok().body(obj);
 
 	}
 }

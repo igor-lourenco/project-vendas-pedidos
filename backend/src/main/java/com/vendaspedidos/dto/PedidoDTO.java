@@ -39,9 +39,10 @@ public class PedidoDTO implements Serializable{
 		id = entity.getId();
 		instante = entity.getInstante();
 		pagamento = entity.getPagamento();
-		cliente = entity.getCliente();
 		enderecoDeEntrega = entity.getEnderecoDeEntrega();
+		cliente = entity.getCliente();
 	}
+	
 	
 	public PedidoDTO(Pedido entity, Set<ItemPedido> itens) {
 		this(entity);
@@ -77,7 +78,7 @@ public class PedidoDTO implements Serializable{
 		return pagamento;
 	}
 
-	public void setPagamento(Pagamento pagamento) {
+	public void setPagamentoDTO(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}
 

@@ -1,12 +1,11 @@
 package com.vendaspedidos.resources.exceptions;
 
 import java.io.Serializable;
-import java.time.Instant;
 
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Instant timestamp;
+	private String timestamp;
 	private Integer status;
 	private String error;
 	private String message;
@@ -15,7 +14,7 @@ public class StandardError implements Serializable {
 	public StandardError(){
 	}
 
-	public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
+	public StandardError(String timestamp, Integer status, String error, String message, String path) {
 		this.timestamp = timestamp;
 		this.status = status;
 		this.error = error;
@@ -23,11 +22,11 @@ public class StandardError implements Serializable {
 		this.path = path;
 	}
 
-	public Instant getTimestamp() {
+	public String getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Instant timestamp) {
+	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 

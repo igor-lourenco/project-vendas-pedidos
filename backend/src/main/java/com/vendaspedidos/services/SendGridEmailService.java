@@ -10,6 +10,7 @@ import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
+import com.vendaspedidos.services.exception.EmailException;
 
 public class SendGridEmailService extends AbstractEmailService {
 
@@ -32,12 +33,12 @@ public class SendGridEmailService extends AbstractEmailService {
 			
 			if(response.getStatusCode() >= 400 && response.getStatusCode() <= 500) {
 				log.info("Erro ao enviar e-mail -> " + response.getBody());
-			}else {
-				log.info("E-mail enviado! Status -> " + response.getStatusCode());
+				throw new EmailException(response.getBody());
 			}
+				log.info("E-mail enviado! Status -> " + response.getStatusCode());
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new EmailException(e.getMessage());
 		}
 	}
 }

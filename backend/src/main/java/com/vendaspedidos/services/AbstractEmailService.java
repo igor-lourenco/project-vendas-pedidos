@@ -22,8 +22,9 @@ public abstract class AbstractEmailService implements EmailService {
 
 	protected Mail prepareSimpleMailMessageFromPedido(Pedido obj) {
 		EmailDTO dto = new EmailDTO();
-		dto.setFromEmail("igor.bretricolor@gmail.com");
+		dto.setFromEmail(sender);
 		dto.setFromName("Igor | Lourenço");
+		dto.setReplyTo(sender);
 		Email from = new Email(dto.getFromEmail(), dto.getFromName());
 
 		dto.setTo(obj.getCliente().getEmail());
@@ -32,7 +33,7 @@ public abstract class AbstractEmailService implements EmailService {
 		dto.setSubject("Pedido confirmado! Código: " + obj.getId());
 		dto.setBody(obj.toString());
 		dto.setContentType("text/plain");
-		dto.setReplyTo(sender);
+		
 		Content content = new Content(dto.getContentType(), dto.getSubject() + dto.getBody());
 		return new Mail(from, dto.getSubject(), to, content);
 	}

@@ -34,6 +34,9 @@ public class Cliente implements Serializable{
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	
+	@JsonIgnore
+	private String senha;
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)//cascade = pra apagar os enderecos associados ao cliente, efeito em cascata
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -48,11 +51,12 @@ public class Cliente implements Serializable{
 	public Cliente() {
 	}
 
-	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente) {
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
+		this.senha = senha;
 		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
 	}
 
@@ -94,6 +98,14 @@ public class Cliente implements Serializable{
 
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente.getCod();
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public List<Endereco> getEnderecos() {

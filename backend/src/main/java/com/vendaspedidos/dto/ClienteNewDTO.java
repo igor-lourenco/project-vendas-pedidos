@@ -21,6 +21,9 @@ public class ClienteNewDTO implements Serializable{
 	private String email;
 	
 	@NotBlank(message = "Campo requerido")
+	private String senha;
+	
+	@NotBlank(message = "Campo requerido")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	
@@ -61,6 +64,15 @@ public class ClienteNewDTO implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 
 	public String getCpfOuCnpj() {
 		return cpfOuCnpj;

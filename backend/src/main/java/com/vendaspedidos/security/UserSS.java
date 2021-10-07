@@ -29,6 +29,10 @@ public class UserSS  implements UserDetails {
 		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
 	}
 	
+	public boolean hasRole(Perfil perfil) { // método pra verificar se o usuario tem o perfil admin
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+	}
+	
 	public Long getId() {
 		return id;
 	}

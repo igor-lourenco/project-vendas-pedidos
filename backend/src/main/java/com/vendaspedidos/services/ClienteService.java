@@ -20,9 +20,12 @@ import com.vendaspedidos.dto.ClienteNewDTO;
 import com.vendaspedidos.entities.Cidade;
 import com.vendaspedidos.entities.Cliente;
 import com.vendaspedidos.entities.Endereco;
+import com.vendaspedidos.entities.enums.Perfil;
 import com.vendaspedidos.entities.enums.TipoCliente;
 import com.vendaspedidos.repositories.ClienteRepository;
 import com.vendaspedidos.repositories.EnderecoRepository;
+import com.vendaspedidos.security.UserSS;
+import com.vendaspedidos.services.exception.AuthorizationException;
 import com.vendaspedidos.services.exception.DatabaseException;
 import com.vendaspedidos.services.exception.ResourceNotFoundException;
 
@@ -40,6 +43,13 @@ public class ClienteService {
 
 	@Transactional(readOnly = true)
 	public Cliente findById(Long id) {
+		
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			// se o usuario for nulo, se o usuario não tiver o perfil de admin e se o id do usuario for diferente do id do parametro
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.vendaspedidos.services.exception.AuthorizationException;
 import com.vendaspedidos.services.exception.DatabaseException;
 import com.vendaspedidos.services.exception.EmailException;
 import com.vendaspedidos.services.exception.ResourceNotFoundException;
@@ -53,6 +54,18 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(LocalDateTime.now().format(formatter));
 		err.setStatus(status.value());
 		err.setError("Exceção no banco");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request){
+		HttpStatus status = HttpStatus.FORBIDDEN; //403
+		StandardError err = new StandardError();
+		err.setTimestamp(LocalDateTime.now().format(formatter));
+		err.setStatus(status.value());
+		err.setError("Acesso negado");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);

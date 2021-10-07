@@ -6,10 +6,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vendaspedidos.dto.PedidoDTO;
+import com.vendaspedidos.entities.Cliente;
 import com.vendaspedidos.entities.ItemPedido;
 import com.vendaspedidos.entities.PagamentoComBoleto;
 import com.vendaspedidos.entities.Pedido;
@@ -17,6 +20,8 @@ import com.vendaspedidos.entities.enums.EstadoPagamento;
 import com.vendaspedidos.repositories.ItemPedidoRepository;
 import com.vendaspedidos.repositories.PagamentoRepository;
 import com.vendaspedidos.repositories.PedidoRepository;
+import com.vendaspedidos.security.UserSS;
+import com.vendaspedidos.services.exception.AuthorizationException;
 import com.vendaspedidos.services.exception.ResourceNotFoundException;
 
 @Service
@@ -48,6 +53,17 @@ public class PedidoService {
 		Optional<Pedido> cat = repository.findById(id);
 		Pedido entity = cat.orElseThrow(() -> new ResourceNotFoundException("Id não encontrado!"));
 		return new PedidoDTO(entity, entity.getItens());
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Pedido> findPage(Pageable pageable){	
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Cliente cliente = clienteService.findById(user.getId());
+		return repository.findByCliente(cliente, pageable);
 	}
 	
 	@Transactional(readOnly = true)

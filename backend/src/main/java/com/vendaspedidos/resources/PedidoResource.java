@@ -1,11 +1,12 @@
 package com.vendaspedidos.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +26,11 @@ public class PedidoResource {
 	
 	@Autowired
 	private PedidoService service;
-
+	
 	@GetMapping
-	public ResponseEntity<List<PedidoDTO>> findAll(){
-		List<PedidoDTO> entity = service.findAll();
-		return ResponseEntity.ok().body(entity);
+	public ResponseEntity<Page<Pedido>> findPage(Pageable pageable){
+		Page<Pedido> page = service.findPage(pageable);
+		return ResponseEntity.ok().body(page);
 	}
 	
 	@GetMapping(value = "/{id}")

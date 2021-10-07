@@ -27,6 +27,7 @@ public class ProdutoResource {
 	@Autowired
 	private ProdutoService service;
 
+	
 	@GetMapping
 	public ResponseEntity<Page<ProdutoDTO>> findAll(Pageable pageable,
 			@RequestParam(value = "nome", defaultValue = "") String nome,

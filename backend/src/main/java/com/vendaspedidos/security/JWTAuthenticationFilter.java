@@ -56,6 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username = ((UserSS) auth.getPrincipal()).getUsername(); // usuario do SpringSecurity e faz um cast para o tipo UserSS
 		String token = jwtUtil.generateToken(username);
 		res.addHeader("Authorization", "Bearer " + token); // retorna o token no cabeçalho da requisição
+		res.addHeader("access-control-expose-headers", "Authorization"); // configuração do CORS
 	}
 
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {

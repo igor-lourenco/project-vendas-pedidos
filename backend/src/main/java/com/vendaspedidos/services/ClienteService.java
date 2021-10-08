@@ -48,11 +48,23 @@ public class ClienteService {
 		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			// se o usuario for nulo, se o usuario não tiver o perfil de admin e se o id do usuario for diferente do id do parametro
 			throw new AuthorizationException("Acesso negado");
-		}
-		
+		}	
 		Optional<Cliente> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	}
+	
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		Cliente obj = repository.findByEmail(email);
+		if (obj == null) {
+			throw new ResourceNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
 	}
 
 	@Transactional(readOnly = true)
@@ -68,7 +80,6 @@ public class ClienteService {
 		enderecoRepository.saveAll(entity.getEnderecos());
 		return entity;
 	}
-
 
 	public ClienteDTO update(Long id, ClienteDTO dto) {
 		try {

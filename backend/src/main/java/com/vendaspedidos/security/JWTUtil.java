@@ -50,7 +50,7 @@ public class JWTUtil { // classe para gerar o token do usuário
 	}
 
 	private Claims getClaims(String token) { // função que recupera as reivindicações de um token
-		//token = token.substring(7);
+		token = token.substring(7);
 		try {
 			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
 		}

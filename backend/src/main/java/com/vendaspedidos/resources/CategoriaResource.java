@@ -25,6 +25,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.vendaspedidos.dto.CategoriaDTO;
 import com.vendaspedidos.services.CategoriaService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -32,6 +34,7 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 
+	@ApiOperation(value="Busca todas categorias paginadas")
 	@GetMapping
 	public ResponseEntity<Page<CategoriaDTO>> findAll(Pageable pageable) {
 
@@ -44,6 +47,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(page);
 	}
 
+	@ApiOperation(value="Busca categoria por id")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CategoriaDTO> findById(@PathVariable Integer id) {
 		CategoriaDTO dto = service.findById(id);
@@ -51,6 +55,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@ApiOperation(value="Adiciona nova categoria")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<CategoriaDTO> insert(@Valid @RequestBody CategoriaDTO dto) {
@@ -59,6 +64,7 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).body(dto); // mostra no corpo da página a entidade criada
 	}
 
+	@ApiOperation(value="Atualiza categoria")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<CategoriaDTO> update(@PathVariable Integer id, @RequestBody CategoriaDTO dto) {
@@ -66,6 +72,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(dto);
 	}
 
+	@ApiOperation(value="Deleta categoria")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<CategoriaDTO> delete(@PathVariable Integer id) {

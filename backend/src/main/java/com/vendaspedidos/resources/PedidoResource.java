@@ -20,6 +20,8 @@ import com.vendaspedidos.dto.PedidoDTO;
 import com.vendaspedidos.entities.Pedido;
 import com.vendaspedidos.services.PedidoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/pedidos")
 public class PedidoResource {
@@ -27,18 +29,21 @@ public class PedidoResource {
 	@Autowired
 	private PedidoService service;
 	
+	@ApiOperation(value="Busca todos os pedidos paginados")
 	@GetMapping
 	public ResponseEntity<Page<Pedido>> findPage(Pageable pageable){
 		Page<Pedido> page = service.findPage(pageable);
 		return ResponseEntity.ok().body(page);
 	}
 	
+	@ApiOperation(value="Busca pedido por id")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<PedidoDTO> findById(@PathVariable Long id) {
 		PedidoDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}
 	
+	@ApiOperation(value="Adiciona novo pedido")
 	@PostMapping
 	public ResponseEntity<Pedido> insert(@Valid @RequestBody Pedido obj) {
 		obj = service.insert(obj);

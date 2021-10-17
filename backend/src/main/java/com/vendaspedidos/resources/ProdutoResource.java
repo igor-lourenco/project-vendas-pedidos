@@ -20,6 +20,8 @@ import com.vendaspedidos.dto.ProdutoDTO;
 import com.vendaspedidos.entities.Produto;
 import com.vendaspedidos.services.ProdutoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoResource {
@@ -27,7 +29,7 @@ public class ProdutoResource {
 	@Autowired
 	private ProdutoService service;
 
-	
+	@ApiOperation(value="Busca todos os produtos paginados")
 	@GetMapping
 	public ResponseEntity<Page<ProdutoDTO>> findAll(Pageable pageable,
 			@RequestParam(value = "nome", defaultValue = "") String nome,
@@ -43,17 +45,16 @@ public class ProdutoResource {
 				cat2.add(linkTo(methodOn(CategoriaResource.class).findById(catId)).withSelfRel());
 			}
 			dto.add(linkTo(methodOn(ProdutoResource.class).findById(prodId)).withSelfRel());
-
 		}
 
 		return ResponseEntity.ok().body(page);
 	}
 
+	@ApiOperation(value="Busca produto por id")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Produto> findById(@PathVariable Long id) {
 		Produto obj = service.findById(id);
 		obj.add(linkTo(methodOn(ProdutoResource.class).findAll(null, null, null)).withRel("Lista de Produtos"));
 		return ResponseEntity.ok().body(obj);
-
 	}
 }

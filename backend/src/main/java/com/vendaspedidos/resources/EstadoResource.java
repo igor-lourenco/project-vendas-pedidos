@@ -17,6 +17,8 @@ import com.vendaspedidos.entities.Estado;
 import com.vendaspedidos.services.CidadeService;
 import com.vendaspedidos.services.EstadoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/estados")
 public class EstadoResource {
@@ -27,6 +29,7 @@ public class EstadoResource {
 	@Autowired
 	private CidadeService cidadeService;
 
+	@ApiOperation(value="Busca todos os estados")
 	@GetMapping
 	public ResponseEntity<List<EstadoDTO>> findAll() {
 		List<Estado> list = service.findAll();
@@ -35,6 +38,7 @@ public class EstadoResource {
 	}
 
 	
+	@ApiOperation(value="Busca cidade pelo estado")
 	@GetMapping(value="/{estadoId}/cidades")
 	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable Long estadoId) {
 		List<Cidade> list = cidadeService.findByEstado(estadoId);

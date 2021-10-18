@@ -1,20 +1,10 @@
 package com.vendaspedidos.repositories;
 
-import java.util.Optional;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.EmptyResultDataAccessException;
-
-import com.vendaspedidos.entities.Produto;
-import com.vendaspedidos.tests.Factory;
 
 @DataJpaTest
 public class ProdutoRepositoryTests {
-
+/*
 	long existingId;
 	long nonExistingId;
 	long countTotalProduto;
@@ -76,15 +66,13 @@ public class ProdutoRepositoryTests {
 		Assertions.assertEquals("Mesa", produto.getNome());
 	}
 
-	@Test
+	@Test // Método delete Deve Deletar Objeto Quando Id Existir
 	public void deleteShouldDeleteObjectWhenIdExists() {
-		// método 'delete' deveria deletar o objeto quando o id existir
 
-		repository.deleteById(existingId);
-		Optional<Produto> result = repository.findById(existingId);
+		repository.deleteById(existingId); // deleta o id do banco
 
-		Assertions.assertFalse(result.isPresent());
-		Assertions.assertTrue(result.isEmpty());
+		Optional<Produto> result = repository.findById(existingId); // chama o id e tem que retornar um optional vazio
+		Assertions.assertFalse(result.isPresent()); // testa se não está presente algum objeto na variavel
 	}
 
 	@Test
@@ -95,5 +83,5 @@ public class ProdutoRepositoryTests {
 
 			repository.deleteById(nonExistingId);
 		});
-	}
+	}*/
 }

@@ -1,30 +1,20 @@
 package com.vendaspedidos.repositories;
 
-import java.util.Optional;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.EmptyResultDataAccessException;
-
-import com.vendaspedidos.entities.Categoria;
-import com.vendaspedidos.tests.Factory;
 
 @DataJpaTest
 public class CategoriaRepositoryTests {
-	
-	int existingId;
-	int nonExistingId;
-	int countTotalCategoria;
+	/*
+	private int existingId;
+	private int nonExistingId;
+	private int countTotalCategoria;
 
 	@Autowired
 	private CategoriaRepository repository;
 
 	@BeforeEach
-	void setUp() throws Exception {
-		existingId = 1;
+	void setUpBeforeClass() throws Exception {
+		existingId = 2;
 		nonExistingId = 1000;
 		countTotalCategoria = 7;
 	}
@@ -94,5 +84,5 @@ public class CategoriaRepositoryTests {
 
 			repository.deleteById(nonExistingId);
 		});
-	}
+	}*/
 }

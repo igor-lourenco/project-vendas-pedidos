@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vendaspedidos.dto.CategoriaDTO;
-import com.vendaspedidos.repositories.CategoriaRepository;
 import com.vendaspedidos.services.exception.ResourceNotFoundException;
 import com.vendaspedidos.tests.Factory;
 
@@ -21,14 +20,10 @@ public class CategoriaServiceIT {
 
 	@Autowired
 	private CategoriaService service;
-	
-	@Autowired
-	private CategoriaRepository repository;
-	
+		
 	private Integer existingId;
 	private Integer nonExistingId;
 	private Integer countTotalCategory;
-	private Integer independentId;
 	
 	private PageRequest page;
 	private Page<CategoriaDTO> result;
@@ -39,8 +34,7 @@ public class CategoriaServiceIT {
 	
 		existingId = 1;
 		nonExistingId = 999;
-		countTotalCategory = 8;
-		independentId = 8;
+		countTotalCategory = 7;
 	}
 	
 	@Test
@@ -100,9 +94,9 @@ public class CategoriaServiceIT {
 		result = service.findAll(page);
 		
 		Assertions.assertFalse(result.isEmpty());
-		Assertions.assertEquals("Cama, mesa e banho", result.getContent().get(0).getNome());
-		Assertions.assertEquals("Cosméticos", result.getContent().get(1).getNome());
-		Assertions.assertEquals("Decoração", result.getContent().get(2).getNome());	
+		Assertions.assertEquals("Cama mesa e banho", result.getContent().get(0).getNome());
+		Assertions.assertEquals("Decoração", result.getContent().get(1).getNome());
+		Assertions.assertEquals("Eletrônicos", result.getContent().get(2).getNome());	
 	}
 	
 	@Test
@@ -127,15 +121,6 @@ public class CategoriaServiceIT {
 		Assertions.assertEquals(10, result.getSize());
 		Assertions.assertEquals(Long.valueOf(countTotalCategory), result.getTotalElements());		
 	}	
-	
-	@Test
-	public void deleteShouldDeleteResourceWhenIdExists() {
-		//método 'delete' deveria deletar o id quando o id existir
-		
-		service.delete(independentId);
-		
-		Assertions.assertEquals(countTotalCategory - 1, repository.count());	
-	}
 	
 	@Test
 	public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists() {

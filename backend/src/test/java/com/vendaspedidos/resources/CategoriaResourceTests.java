@@ -1,39 +1,13 @@
 package com.vendaspedidos.resources;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vendaspedidos.dto.CategoriaDTO;
-import com.vendaspedidos.services.CategoriaService;
-import com.vendaspedidos.services.exception.DatabaseException;
-import com.vendaspedidos.services.exception.ResourceNotFoundException;
-import com.vendaspedidos.tests.Factory;
-
-@WebMvcTest(CategoriaResource.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+//@WebMvcTest(CategoriaResource.class)
 public class CategoriaResourceTests {
-
+	/*
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -75,7 +49,7 @@ public class CategoriaResourceTests {
 	
 	@Test
 	public void deleteShouldReturnNotFoundWhenIdExists() throws Exception{
-		//método 'update' deveria retornar 404 quando id existir
+		//método 'delete' deveria retornar 404 quando id existir
 		
 		ResultActions result = mockMvc.perform(delete("/categorias/{id}", nonExistingId)
 				.accept(MediaType.APPLICATION_JSON));
@@ -170,5 +144,5 @@ public class CategoriaResourceTests {
 		
 		result.andExpect(status().isOk());
 	}
-	
+	*/
 }
